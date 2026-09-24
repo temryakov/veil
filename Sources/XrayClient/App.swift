@@ -216,7 +216,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     weak var connection: ConnectionManager?
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        // Keep running in the menu bar when close-to-tray is enabled.
+        // Keep running in the menu bar when close-to-tray is enabled, and drop
+        // the Dock tile for the duration — "Open Window" in the menu bar
+        // restores it from `AppSettings.hideDockIcon`, so this is a transient
+        // hide, not a change to that persisted setting.
+        if closeToTray {
+            DockIcon.setHidden(true)
+        }
         return !(closeToTray || dockHidden)
     }
 

@@ -52,6 +52,12 @@ struct MenuBarContent: View {
         }
 
         Divider()
+        Button {
+            Task { await SubscriptionService.refreshAll(store) }
+        } label: {
+            Label(loc("Refresh subscriptions"), systemImage: "arrow.clockwise")
+        }
+        Divider()
         Button(loc("Open Window")) {
             // Never force `.regular` here: someone who asked for no Dock icon
             // must not get one back by opening the window.
